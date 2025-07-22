@@ -1,13 +1,14 @@
 let datos = [];
+let encabezados = [];
 
 fetch("datos.csv")
   .then(res => res.text())
   .then(text => {
-    const filas = text.split('\n').map(row => row.split(','));
-    const encabezados = filas[0];
+    const filas = text.split('\n').filter(row => row.trim() !== "").map(row => row.split(','));
+    encabezados = filas[0];
     datos = filas.slice(1);
     mostrarResultados('');
-
+    
     document.getElementById("searchInput").addEventListener("input", e => {
       mostrarResultados(e.target.value);
     });
@@ -22,7 +23,7 @@ function mostrarResultados(termino) {
   );
 
   let html = "<table><thead><tr>";
-  html += datos[0].map((_, i) => `<th>Columna ${i + 1}</th>`).join('');
+  html += encabezados.map(c => `<th>${c}</th>`).join('');
   html += "</tr></thead><tbody>";
 
   filasFiltradas.forEach(fila => {
