@@ -2,18 +2,72 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Buscador de Registros</title>
+  <title>Docentes que trabajan POA con cuenta MINERD</title>
   <script src="buscador.js" defer></script>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    input { padding: 5px; width: 300px; }
-    table { border-collapse: collapse; margin-top: 20px; width: 100%; }
-    th, td { border: 1px solid #ccc; padding: 8px; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f8;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #005baa;
+      margin-bottom: 30px;
+    }
+
+    .buscador {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      width: 100%;
+      max-width: 400px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 30px;
+      background: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background-color: #005baa;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    #resultados {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
   </style>
 </head>
 <body>
-  <h1>Buscador</h1>
-  <input type="text" id="searchInput" placeholder="Escribe para buscar..." />
+  <h1>Docentes que trabajan POA con cuenta MINERD</h1>
+  <div class="buscador">
+    <input type="text" id="searchInput" placeholder="Escribe un nombre, correo o dato para buscar..." />
+  </div>
   <div id="resultados"></div>
 </body>
 </html>
