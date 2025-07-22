@@ -1,43 +1,54 @@
 let datos = [];
 let encabezados = [];
 
+// Cargar el archivo CSV
 fetch("datos.csv")
   .then(res => res.text())
   .then(text => {
-    // Convertir CSV a array, ignorar líneas vacías
     const filas = text.split('\n').filter(row => row.trim() !== "").map(row => row.split(','));
-    encabezados = filas[0];
+    encabezados = filas[0].map(e => e.trim());
     datos = filas.slice(1);
-    mostrarResultados(''); // Mostrar todos al cargar
-    
+    mostrarResultados(''); // Muestra todo al cargar
+
+    // Escuchar el input de búsqueda
     document.getElementById("searchInput").addEventListener("input", e => {
       mostrarResultados(e.target.value);
     });
   });
 
+// Mostrar resultados de la búsqueda
 function mostrarResultados(termino) {
   const contenedor = document.getElementById("resultados");
-  const filtro = termino.toLowerCase();
+  const filtro = termino.trim().toLowerCase();
 
-  // Filtrar filas que contengan el término en cualquier celda
+  if (!filtro) {
+    // Mostrar todos si el campo está vacío
+    construirTabla(datos);
+    return;
+  }
+
+  // Filtrar por coincidencia en cualquier celda
   const filasFiltradas = datos.filter(fila =>
     fila.some(celda => celda.toLowerCase().includes(filtro))
   );
 
-  // Mostrar mensaje si no hay resultados
   if (filasFiltradas.length === 0) {
-    contenedor.innerHTML = `<p style="padding: 1rem; text-align: center; color: #555; font-weight: bold;">
-      🔍 No se encontraron resultados para "<i>${termino}</i>"
+    contenedor.innerHTML = `<p style="padding: 1rem; text-align: center; color: #888; font-style: italic;">
+      🔍 No se encontraron resultados para "<strong>${termino}</strong>"
     </p>`;
-    return;
+  } else {
+    construirTabla(filasFiltradas);
   }
+}
 
-  // Construir tabla con encabezados y filas filtradas
+// Construir tabla con encabezados y datos
+function construirTabla(filas) {
+  const contenedor = document.getElementById("resultados");
   let html = "<table><thead><tr>";
   html += encabezados.map(c => `<th>${c}</th>`).join('');
   html += "</tr></thead><tbody>";
 
-  filasFiltradas.forEach(fila => {
+  filas.forEach(fila => {
     html += "<tr>" + fila.map(c => `<td>${c}</td>`).join('') + "</tr>";
   });
 
